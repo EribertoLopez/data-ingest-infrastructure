@@ -8,7 +8,7 @@ variable "customer" {
   default     = "strateos"
 }
 
-variable "workspace" {
-  description = ""
-  default = terraform.workspace
+variable "appname" {
+  description = "App name."
+  default     = "data-ingest"
 }
