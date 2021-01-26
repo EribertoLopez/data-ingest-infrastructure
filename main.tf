@@ -50,11 +50,11 @@ resource "aws_s3_bucket_policy" "allow_lambda_get_objects" {
 
 // Permission for s3 to execute forwarding lambda.
 resource "aws_lambda_permission" "allow_bucket" {
-  statement_id = "AllowExecutionFromS3Bucket"
-  action = "lambda:InvokeFunction"
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.forward_s3_create_data_object.arn
-  principal = "s3.amazonaws.com"
-  source_arn = aws_s3_bucket.ingest_bucket.arn
+  principal     = "s3.amazonaws.com"
+  source_arn    = aws_s3_bucket.ingest_bucket.arn
 }
 
 // The forwarding lambda triggered by new data ingest.
@@ -80,7 +80,7 @@ resource "aws_s3_bucket_notification" "forward_s3_create_data_object" {
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.forward_s3_create_data_object.arn
-    events = ["s3:ObjectCreated:*"]
+    events              = ["s3:ObjectCreated:*"]
   }
 }
 
@@ -93,7 +93,7 @@ resource "aws_apigatewayv2_api" "data_ingest_gateway" {
 // Gateway stage
 resource "aws_apigatewayv2_stage" "dev" {
   api_id = aws_apigatewayv2_api.data_ingest_gateway.id
-  name = "strateos-data-ingest-dev-ingest-stage"
+  name   = "strateos-data-ingest-dev-ingest-stage"
 }
 
 // Gateway logs
@@ -145,6 +145,16 @@ resource "aws_lambda_function" "get-data-type-lambda" {
   runtime           = "python3.8"
   s3_object_version = data.aws_s3_bucket_object.get_data_type_lambda.version_id
 }
+
+resource "aws_lambda_permission" "gateway_lambda_permission" {
+  statement_id  = "AllowMyDemoAPIInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.get-data-type-lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.data_ingest_gateway.execution_arn}/*/*/${aws_lambda_function.get-data-type-lambda.function_name}"
+}
+
 
 // Enqueue process_txt_data
 
