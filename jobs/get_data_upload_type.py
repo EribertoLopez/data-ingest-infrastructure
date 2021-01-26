@@ -1,9 +1,13 @@
+import json
+
 def handler(event, context):
-    for record in event['Records']:
-        bucket = record['s3']['bucket']['name']
-        object_key = record['s3']['object']['key']
-
-        print('Bucket: ' + bucket + ' | Object key: ' + object_key)
-
-    return
-
+    json_region = 'hello world'
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": json.dumps({
+            "Region ": json_region
+        })
+    }

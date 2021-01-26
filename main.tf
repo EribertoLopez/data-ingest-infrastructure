@@ -17,6 +17,11 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_from_api" {
+  role       = aws_iam_role.iam_for_lambda.name
+  policy_arn = aws_iam_policy.lambda_from_api.arn
+}
+
 // S3 bucket to hold all data-ingest lambda .zip files.
 resource "aws_s3_bucket" "data_ingest_lambda_bucket" {
   bucket = "${var.customer}-${local.workspace}-lambda-bucket"
@@ -85,10 +90,26 @@ resource "aws_apigatewayv2_api" "data_ingest_gateway" {
   protocol_type = "HTTP"
 }
 
+// Gateway stage
+resource "aws_apigatewayv2_stage" "dev" {
+  api_id = aws_apigatewayv2_api.data_ingest_gateway.id
+  name = "strateos-data-ingest-dev-ingest-stage"
+}
+
+// Gateway logs
+resource "aws_cloudwatch_log_group" "gateway_logs" {
+  name = "${var.customer}-${local.workspace}-gateway-logs"
+
+  tags = {
+    Environment = local.workspace
+    Application = var.appname
+  }
+}
+
 // Endpoint for get_data_type
 resource "aws_apigatewayv2_route" "test_route" {
   api_id    = aws_apigatewayv2_api.data_ingest_gateway.id
-  route_key = "get /test-route"
+  route_key = "GET /test-route"
   target    = "integrations/${aws_apigatewayv2_integration.gateway-get-data-type-integration.id}"
 }
 
@@ -107,12 +128,6 @@ resource "aws_apigatewayv2_integration" "gateway-get-data-type-integration" {
   integration_method   = "POST"
   integration_uri      = aws_lambda_function.get-data-type-lambda.arn
   passthrough_behavior = "WHEN_NO_MATCH"
-}
-
-// NOT SURE IF WE NEED THIS...
-resource "aws_apigatewayv2_stage" "ingest-stage" {
-  api_id = aws_apigatewayv2_api.data_ingest_gateway.id
-  name   = "${var.customer}-${local.workspace}-ingest-stage"
 }
 
 // Lambda to get data type

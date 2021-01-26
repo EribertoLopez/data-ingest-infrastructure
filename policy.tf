@@ -11,6 +11,16 @@ data "aws_iam_policy_document" "lambda-assume-role" {
       type        = "Service"
     }
   }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "execute-api:Invoke"
+    ]
+
+    resources = []
+  }
 }
 
 data "aws_iam_policy_document" "allow_lambda_get_objects" {
@@ -74,4 +84,28 @@ resource "aws_iam_policy" "lambda_logging" {
   ]
 }
 EOF
+}
+
+resource "aws_iam_policy" "lambda_from_api" {
+  policy = data.aws_iam_policy_document.lambda_from_api.json
+}
+
+data "aws_iam_policy_document" "lambda_from_api" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "lambda:InvokeFunction"
+    ]
+
+    resources = [
+      aws_lambda_function.get-data-type-lambda.arn
+    ]
+
+    condition {
+      test = "ArnLike"
+      values = ["arn:aws:execute-api:us-west-2:722041473403:vad0ls6yx4/*/*/get_data_upload_type_lambda"]
+      variable = "aws:SourceArn"
+    }
+  }
 }

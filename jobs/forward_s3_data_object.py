@@ -2,10 +2,13 @@ import requests
 
 API_ID = 'vad0ls6yx4'
 REGION = 'us-west-2'
+STAGE = 'strateos-data-ingest-dev-ingest-stage'
 ENDPOINT = 'data-upload-type'
-GET_DATA_TYPE_URL = f'https://{API_ID}.execute-api.{REGION}.amazonaws.com/{ENDPOINT}'
+GET_DATA_TYPE_URL = f'https://{API_ID}.execute-api.{REGION}.amazonaws.com/{STAGE}/{ENDPOINT}'
 
 def handler(event, context):
+    print('Invoking forwarding service...')
+
     data = event
     resp = requests.post(
         GET_DATA_TYPE_URL,
@@ -13,6 +16,3 @@ def handler(event, context):
     )
 
     print(resp)
-
-
-https://vad0ls6yx4.execute-api.us-west-2.amazonaws.com/data-upload-type
