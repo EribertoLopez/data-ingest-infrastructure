@@ -1,0 +1,12 @@
+Type: AWS::Lambda::EventSourceMapping
+Properties:
+  BatchSize: 1
+  EventSourceArn:
+    Fn::GetAtt:
+      - DataIngestorStream
+      - Arn      
+  FunctionName:
+    Fn::GetAtt:
+      - StreamConsumerLambdaFunction
+      - Arn
+  StartingPosition: TRIM_HORIZON

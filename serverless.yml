@@ -1,0 +1,58 @@
+service: ${file(./serverless.env.yml):APPNAME}
+frameworkVersion: '2'
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+      dockerizePip: true
+
+provider:
+  name: aws
+  runtime: ${file(./serverless.env.yml):RUNTIME}
+  stage: ${file(./serverless.env.yml):STAGE}
+  region: us-west-2
+  environment:
+    INGEST_S3: ${file(./serverless.env.yml):INGEST_S3}-${self:provider.stage}
+    MESSAGEBACKUP_S3: ${file(./serverless.env.yml):MESSAGEBACKUP_S3}-${self:provider.stage}
+    STREAMNAME: ${file(./serverless.env.yml):STREAMNAME}-${self:provider.stage}
+    HTS_DYNAMODB: ${file(./serverless.env.yml):HTS_DYNAMODB}-${self:provider.stage}
+  iamRoleStatements: ${file(./policies/globalPolicies.yml)}
+
+functions:
+  streamConsumer:
+    handler: lambdas/app.consumer
+    environment:
+        APIID: !Ref ApiGatewayRestApi
+        APIREG: ${self:provider.region}
+        APISTAGE: ${file(./serverless.env.yml):STAGE}
+
+  process:
+    handler: lambdas/dataservice.process
+    events:
+      - http:
+          path: /process
+          method: post
+    
+resources:
+  Resources:
+    DataIngestorStream: ${file(./resources/KinesisStream.yml)}
+    INGESTS3: ${file(./resources/IngestDataS3.yml)}
+    MESSAGEBACKUPS3: ${file(./resources/MessageBackUpS3.yml)}
+    BucketPolicy: ${file(./resources/BucketPolicy.yml)}
+    Event: ${file(./resources/KinesisEvent.yml)}
+    # DynamoDB as the end of poc - temporary stand in for other DBs
+    HTSTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: runId
+            AttributeType: S
+
+        KeySchema:
+          - AttributeName: runId
+            KeyType: HASH
+
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 100

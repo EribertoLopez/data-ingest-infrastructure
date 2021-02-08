@@ -1,0 +1,33 @@
+
+# Grant privilege read from Kinesis work stream 
+- Effect: Allow 
+  Action: 
+    - kinesis:GetRecords 
+    - kinesis:GetShardIterator 
+    - kinesis:DescribeStream 
+    - kinesis:ListStreams 
+    - kinesis:PutRecord 
+    - kinesis:PutRecords 
+  Resource: 
+    Fn::GetAtt: 
+      - DataIngestorStream
+      - Arn
+# Allow logging for all resources
+- Effect: Allow
+  Action:
+    - "xray:PutTraceSegments"
+    - "xray:PutTelemetryRecords"
+  Resource:
+    - "*"
+
+# Allow CRUD operations for dynamoDB
+- Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+  Resource:
+    Fn::GetAtt:
+      - HTSTable
+      - Arn
