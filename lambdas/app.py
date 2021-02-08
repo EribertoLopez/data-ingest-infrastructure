@@ -12,7 +12,8 @@ def consumer(event, context):
         # look a the data field and map the data type
         if 'csv' in r['kinesis']['data'].lower():
             print('hts post to processing endpoint')
-            requests.post(apiEndpoint + '/process')
+            print(apiEndpoint+'/process')
+            # requests.post(apiEndpoint + '/process')
         # if data type then post to endpoint
     
     return {

@@ -19,11 +19,14 @@ Infrastructure code ([Serverless Framework](https://www.serverless.com/framework
 ├── serverless.env.yml <-- Define serverless.yml env variables
 └── serverless.yml <-- Magically gets picked up by serverless framework CLI
 ```
+
 ### Getting Started
 - Install the Serverless Framework binary by following https://www.serverless.com/framework/docs/getting-started/
     - Once installed use `serverless help` to list the commands available
+    - Use `$ source install.sh` to install the necessary plugins in `serverless.yml`
 - Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
     - Once installed configure your CLI to use the profile of your choice `$ aws configure`
+
 ### Contributing
 - When adding a new lambda function:
     - place the lambda function in the `/lambdas` directory
@@ -60,3 +63,6 @@ Infrastructure code ([Serverless Framework](https://www.serverless.com/framework
     - `$ serverless package`
 - Next, use `$ serverless deploy` to deploy the cloudformation stack
 
+### Kinesis Stream Testing
+- Use the `kinesisEvent.sh` in the `/tests` directory to send message to the kinesis stream.
+    - ie: `$ source tests/kinesisEvent.sh`
