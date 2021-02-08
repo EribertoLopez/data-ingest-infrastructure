@@ -1,3 +1,10 @@
+# Local .serverless directories
+**/.serverless/**
+**/__pycache__/**
+**/node_modules/**
+**/package.json
+**/package-lock.json
+
 # Local .terraform directories
 **/.terraform/*
 
