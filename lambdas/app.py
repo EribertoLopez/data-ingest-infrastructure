@@ -4,7 +4,6 @@ import os
 
 def consumer(event, context):
     apiEndpoint = f"https://{os.environ['APIID']}.execute-api.{os.environ['APIREG']}.amazonaws.com/{os.environ['APISTAGE']}"
-    print(apiEndpoint)
     streamName = os.environ['STREAMNAME']
     print('Streaming from: ' + streamName)
     print(f"Number of records: {len(event['Records'])}")
@@ -77,7 +76,7 @@ def test_consumer():
 
 
 if __name__ == '__main__':
-    stream_consumer()
+    test_consumer()
 
 
 

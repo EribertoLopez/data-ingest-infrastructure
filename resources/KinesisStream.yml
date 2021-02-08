@@ -1,0 +1,4 @@
+Type: AWS::Kinesis::Stream
+Properties: 
+  Name: "${self:provider.environment.STREAMNAME}"
+  ShardCount: 1

@@ -21,14 +21,14 @@ provider:
 
 functions:
   streamConsumer:
-    handler: app.consumer
+    handler: lambdas/app.consumer
     environment:
         APIID: !Ref ApiGatewayRestApi
         APIREG: ${self:provider.region}
         APISTAGE: ${file(./serverless.env.yml):STAGE}
 
   process:
-    handler: dataservice.process
+    handler: lambdas/dataservice.process
     events:
       - http:
           path: /process

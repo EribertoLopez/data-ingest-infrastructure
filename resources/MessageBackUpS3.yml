@@ -1,0 +1,17 @@
+Type: AWS::S3::Bucket
+Properties:
+  BucketName: "${self:provider.environment.MESSAGEBACKUP_S3}"
+  CorsConfiguration:
+    CorsRules:
+      - 
+        AllowedOrigins:
+          - '*'
+        AllowedHeaders:
+          - '*'
+        AllowedMethods:
+          - GET
+          - PUT
+          - POST
+          - DELETE
+          - HEAD
+        # MaxAge: 3000
