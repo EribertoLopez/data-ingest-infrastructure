@@ -33,6 +33,14 @@ functions:
       - http:
           path: /process
           method: post
+  
+  readingfiles3:
+    handler: lambdas/dataservice.readingfiles3
+    events:
+      - http:
+        path: /readingfiles3
+        method: post
+  #process-hts: posts information to my func to know the bucket and data to look at 
     
 resources:
   Resources:

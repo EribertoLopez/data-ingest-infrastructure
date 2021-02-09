@@ -6,4 +6,5 @@
 # read path
 # echo -n "Enter a partition key for this record:"
 # read partitionkey
+# pull in serverless.env.yaml environment keys and concatenate the stream name and the stage 
 aws kinesis put-record --stream-name "DataIngestorStream-2-dev" --data "./test.csv" --partition-key "my-partitionkey"
