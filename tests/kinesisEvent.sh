@@ -6,4 +6,4 @@
 # read path
 # echo -n "Enter a partition key for this record:"
 # read partitionkey
-aws kinesis put-record --stream-name "DataIngestorStream-2-dev" --data "./test.csv" --partition-key "my-partitionkey"
+aws kinesis put-record --stream-name "DataIngestorStream-dev" --data "./test.csv" --partition-key "my-partitionkey"

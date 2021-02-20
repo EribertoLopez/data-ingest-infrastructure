@@ -9,4 +9,4 @@ Properties:
     Fn::GetAtt:
       - StreamConsumerLambdaFunction
       - Arn
-  StartingPosition: TRIM_HORIZON
+  StartingPosition: LATEST
