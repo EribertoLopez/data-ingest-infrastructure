@@ -1,0 +1,15 @@
+Type: AWS::IAM::Policy
+Properties:
+  PolicyName: ${self:service}-${self:provider.stage}-firehose-invoke-lambda-policy
+  PolicyDocument:
+    Statement:
+      - Effect: Allow
+        Action:
+          - 'lambda:InvokeFunction'
+        Resource:
+          Fn::GetAtt:
+            - FirehoseLambdaFunction
+            - Arn
+  Roles:
+    - !Ref FirehoseDeliveryRole
+
