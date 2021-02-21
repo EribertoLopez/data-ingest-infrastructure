@@ -36,7 +36,9 @@ functions:
     environment: 
       DDB: !Ref HTSTable
     timeout: 600
-
+  
+  firehose:
+    handler: lambdas/firehose.handler
     
 resources:
   Resources:
@@ -60,3 +62,8 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 100
+
+    FirehoseDeliveryRole: ${file(./resources/firehose/FirehoseDeliveryRole.yml)}
+    FirehoseDeliveryToS3Policy: ${file(./resources/firehose/FirehoseDeliveryToS3Policy.yml)}
+    FirehoseInvokeLambdaPolicy: ${file(./resources/firehose/FirehoseInvokeLambdaPolicy.yml)}
+    FirehoseDeliveryStream: ${file(./resources/firehose/FirehoseDeliveryStream.yml)}
