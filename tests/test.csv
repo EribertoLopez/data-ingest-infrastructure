@@ -1,13 +1,13 @@
-aliquot_name,container_label,container_id,container_type,aliquot_id,well,created_at,volume_remaining
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseex5nj9,2,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseey9upb,4,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseex5njc,3,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndsef2j8xe,7,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseeuv9a7,0,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseeze2tb,5,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndsef5xubf,11,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseevzfe9,1,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndseeze2te,6,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndsef3pf3d,8,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndsef3pf3g,9,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
-IVTTReaction,1-AssemblyPlate-PCR-Plate-IVTT-Plate,ct1fbndqwxua4dv,96-pcr,aq1fbndsef4tn7g,10,Fri Jan 22 2021 17:54:56 GMT-0800,75.0
+runId,channel,container_id,platebarcode,value,warpId,well,measurement
+rxxxxxxxx,A,ct1fbndqwxua4dv,0xbarcode,1,wxxxxxxx,A1,1
+rxxxxxxxx,B,ct1fbndqwxua4dv,0xbarcode,4,wxxxxxxx,A1,2
+rxxxxxxxx,C,ct1fbndqwxua4dv,0xbarcode,3,wxxxxxxx,A1,3
+rxxxxxxxx,A,ct1fbndqwxua4dv,0xbarcode,7,wxxxxxxx,A2,4
+rxxxxxxxx,B,ct1fbndqwxua4dv,0xbarcode,0,wxxxxxxx,A2,5
+rxxxxxxxx,C,ct1fbndqwxua4dv,0xbarcode,5,wxxxxxxx,A2,6
+rxxxxxxxx,A,ct1fbndqwxua4dv,0xbarcode,11,wxxxxxxx,A3,7
+rxxxxxxxx,B,ct1fbndqwxua4dv,0xbarcode,1,wxxxxxxx,A3,8
+rxxxxxxxx,C,ct1fbndqwxua4dv,0xbarcode,6,wxxxxxxx,A3,9
+rxxxxxxxx,A,ct1fbndqwxua4dv,0xbarcode,8,wxxxxxxx,A4,10
+rxxxxxxxx,B,ct1fbndqwxua4dv,0xbarcode,9,wxxxxxxx,A4,11
+rxxxxxxxx,C,ct1fbndqwxua4dv,0xbarcode,10,wxxxxxxx,A4,12

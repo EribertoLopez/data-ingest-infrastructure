@@ -1,4 +1,3 @@
-
 # Grant privilege read from Kinesis work stream 
 - Effect: Allow 
   Action: 
@@ -12,6 +11,7 @@
     Fn::GetAtt: 
       - DataIngestorStream
       - Arn
+
 # Allow logging for all resources
 - Effect: Allow
   Action:
@@ -27,7 +27,9 @@
     - dynamodb:Scan
     - dynamodb:GetItem
     - dynamodb:PutItem
-  Resource:
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+  Resource: 
     Fn::GetAtt:
       - HTSTable
       - Arn
