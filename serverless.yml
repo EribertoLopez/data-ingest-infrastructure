@@ -36,12 +36,6 @@ functions:
     environment: 
       DDB: !Ref HTSTable
 
-  processHTS:
-    handler: lambdas/dataservice.processHTS
-    events:
-      - http:
-          path: /processHTS
-          method: post
     
 resources:
   Resources:
