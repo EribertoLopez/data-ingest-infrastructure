@@ -6,18 +6,22 @@ import pandas as pd
 from string import ascii_letters
 
 
-def process(event, context):
-
-    # Get DynamoDb table size
+def processHTSdata(event, context):
+    # Initiation 
     dynamodb_client = boto3.client('dynamodb')
     dynamodb_ressource = boto3.resource('dynamodb')
-    table_name = dynamodb_client.list_tables()['TableNames'][1]
+
+    # Get DynamoDb table 
+    table_name = dynamodb_client.list_tables()['TableNames'][2]
+    print('ls table name', table_name)
+    print('os table name:', os.getenv('DDB'))
     table = dynamodb_ressource.Table(table_name)
+
     table_length = len(table.scan()['Items'])
-    print(table_length)
     
-    # Get s3 data 
-    bucket_name = 'strateos-ingest-bucket-dev'
+    # Get s3 data for long or matrix format and transform it into proper schema for the db 
+    bucket_name = 'strateos-ingest-bucket-dev' 
+    print(os.getenv('Bucket'))
     metadata = findMetadata()
     df, fileFormat = readFile(event['filename'], bucket_name)
     if fileFormat == 'Long':
@@ -27,12 +31,13 @@ def process(event, context):
         df = processMatrixFormat(df)
         print(addMetadata(df, metadata).columns)
     
+    # Populates the db 
     for index, row in enumerate(df.values[:10]) :
-        well, value, channel, measurement, platebarcode, runid, warpid = row[0], row[1], row[2], index + table_length, row[4], row[5], row[6]
+        well, value, channel, platebarcode, runid, warpid = row[0], row[1], row[2], row[3], row[4], row[5]
         add_to_db = dynamodb_client.put_item(
                 TableName=table_name, 
                 Item={
-                    'measurement' : {'S' : str(measurement)},
+                    'ID' : {'S' : str(index + table_length)},
                     'well' : {'S' : str(well)},
                     'value' : {'S' : str(value)},
                     'channel' : {'S' : str(channel)},
@@ -137,17 +142,17 @@ def findMetadata():
     """
     
     """
-    metadata = {'id': 1,
-            'plateBarcode': 'AM00000656',
-            'runId': 'r1f57rf77jbdsd', 
-            'warpId': 'warpid'}
+    metadata = {
+        'plateBarcode': 'AM00000656',
+        'runId': 'r1f57rf77jbdsd', 
+        'warpId': 'warpid'
+        }
     return metadata
 
 def addMetadata(df, metadata):
     """
     
     """
-    df['id'] = metadata['id']
     df['plateBarcode'] = metadata['plateBarcode']
     df['runId'] = metadata['runId']
     df['warpId'] = metadata['warpId']

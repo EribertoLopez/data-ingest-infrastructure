@@ -27,14 +27,15 @@ functions:
       APIREG: ${self:provider.region}
       APISTAGE: ${file(./serverless.env.yml):STAGE}
 
-  process:
-    handler: lambdas/dataservice.process
+  processHTSdata:
+    handler: lambdas/dataservice.processHTSdata
     events:
       - http:
-          path: /process
+          path: /processHTSdata
           method: post
     environment: 
       DDB: !Ref HTSTable
+    timeout: 600
 
     
 resources:
