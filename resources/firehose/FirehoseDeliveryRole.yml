@@ -1,0 +1,14 @@
+Type: AWS::IAM::Role
+Properties:
+  RoleName: ${self:service}-${self:provider.stage}-firehose-delivery-role
+  AssumeRolePolicyDocument:
+    Statement:
+      - Sid: ''
+        Effect: Allow
+        Principal:
+          Service: firehose.amazonaws.com
+        Action: 'sts:AssumeRole'
+        Condition:
+          StringEquals:
+            'sts:ExternalId': !Ref 'AWS::AccountId'
+

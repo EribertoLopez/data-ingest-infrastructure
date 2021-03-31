@@ -1,0 +1,20 @@
+Type: AWS::IAM::Policy
+Properties:
+  PolicyName: ${self:service}-${self:provider.stage}-firehose-delivery-to-s3-policy
+  PolicyDocument:
+    Statement:
+      - Effect: Allow
+        Action:
+          - 's3:AbortMultipartUpload'
+          - 's3:GetBucketLocation'
+          - 's3:GetObject'
+          - 's3:ListBucket'
+          - 's3:ListBucketMultipartUploads'
+          - 's3:PutObject'
+        Resource:
+          - !Sub 'arn:aws:s3:::${self:provider.environment.MESSAGEBACKUP_S3}'
+          - !Sub 'arn:aws:s3:::${self:provider.environment.MESSAGEBACKUP_S3}*'
+  Roles:
+    - !Ref FirehoseDeliveryRole
+
+

@@ -12,6 +12,18 @@
       - DataIngestorStream
       - Arn
 
+# # Allow Firehose to read from DataIngestorStream
+# - Effect: Allow 
+#   Action: 
+#     - kinesis:GetRecords 
+#     - kinesis:GetShardIterator 
+#     - kinesis:DescribeStream 
+#     - kinesis:ListStreams 
+#   Resource: 
+#     Fn::GetAtt: 
+#       - FirehoseDeliveryStream
+#       - Arn
+
 # Allow logging for all resources
 - Effect: Allow
   Action:

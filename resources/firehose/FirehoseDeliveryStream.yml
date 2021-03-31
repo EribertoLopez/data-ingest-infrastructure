@@ -1,0 +1,19 @@
+Type: AWS::KinesisFirehose::DeliveryStream
+Properties:
+  DeliveryStreamName: ${self:service}-${self:provider.stage}-kinesis-delivery-stream
+  ExtendedS3DestinationConfiguration:
+    BucketARN: !Sub 'arn:aws:s3:::${self:provider.environment.MESSAGEBACKUP_S3}'
+    BufferingHints:
+      IntervalInSeconds: 60
+      SizeInMBs: 3
+    CompressionFormat: UNCOMPRESSED
+    Prefix: firehose/
+    RoleARN: !GetAtt FirehoseDeliveryRole.Arn
+    ProcessingConfiguration:
+      Enabled: true
+      Processors:
+        - Parameters:
+            - ParameterName: LambdaArn
+              ParameterValue: !GetAtt FirehoseLambdaFunction.Arn 
+          Type: Lambda
+
