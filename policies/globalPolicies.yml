@@ -33,3 +33,13 @@
     Fn::GetAtt:
       - HTSTable
       - Arn
+
+# S3 Policies      
+- Effect: Allow
+  Action:
+    - s3:GetObject
+    - s3:ListBucket
+    - s3:GetBucketLocation
+    - s3:ListObject
+  Resource:
+    - "*"
