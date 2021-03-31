@@ -9,7 +9,7 @@ testevent = {
                 "partitionKey": "hts-data-key",
                 "sequenceNumber": "49615134504910266808533590511982557943402697614740684802",
                 "data": "test.csv",
-                "approximateArrivalTimestamp": 1612673359.612,
+                "approximateArrivalTimestamp": 1612673359.612
             },
             "eventSource": "aws:kinesis",
             "eventVersion": "1.0",
@@ -17,7 +17,7 @@ testevent = {
             "eventName": "aws:kinesis:record",
             "invokeIdentityArn": "arn:aws:iam::384739123065:role/sls-dataingestor-poc-dev-us-west-2-lambdaRole",
             "awsRegion": "us-west-2",
-            "eventSourceARN": "arn:aws:kinesis:us-west-2:384739123065:stream/DataIngestorStream-dev",
+            "eventSourceARN": "arn:aws:kinesis:us-west-2:384739123065:stream/DataIngestorStream-dev"
         }
     ]
 }
@@ -46,7 +46,6 @@ def test_consumer():
             'event': testevent
         })
     }
-
 
 if __name__ == '__main__':
     test_consumer()

@@ -4,6 +4,9 @@ import os
 import s3fs
 import pandas as pd 
 from string import ascii_letters
+import logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def processHTSdata(event, context):
@@ -13,23 +16,23 @@ def processHTSdata(event, context):
 
     # Get DynamoDb table 
     table_name = dynamodb_client.list_tables()['TableNames'][2]
-    print('ls table name', table_name)
-    print('os table name:', os.getenv('DDB'))
+    logger.info('ls table name', table_name)
+    logger.info('os table name:', os.getenv('DDB'))
     table = dynamodb_ressource.Table(table_name)
 
     table_length = len(table.scan()['Items'])
     
     # Get s3 data for long or matrix format and transform it into proper schema for the db 
     bucket_name = 'strateos-ingest-bucket-dev' 
-    print(os.getenv('Bucket'))
+    logger.info(os.getenv('Bucket'))
     metadata = findMetadata()
     df, fileFormat = readFile(event['filename'], bucket_name)
     if fileFormat == 'Long':
         df = processLongFormat(df)
-        print(addMetadata(df, metadata).columns)
+        logger.info(addMetadata(df, metadata).columns)
     if fileFormat == 'Matrix':
         df = processMatrixFormat(df)
-        print(addMetadata(df, metadata).columns)
+        logger.info(addMetadata(df, metadata).columns)
     
     # Populates the db 
     for index, row in enumerate(df.values[:10]) :
@@ -55,7 +58,7 @@ def readFile(filename, bucket_name):
     """
     
     """
-    print('Read')
+    logger.info('Read')
     SkiprowsLongFormat = 16 
     filepath = 's3://{}/{}'.format(bucket_name, filename)
     fs = s3fs.S3FileSystem()
